@@ -32,7 +32,10 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 设置哪些URL需要认证才能访问
         http.authorizeRequests()
-                .antMatchers("/test/index")
-                .permitAll();
+                .antMatchers("/test/index").hasAuthority("admin") // admin权限才可以访问
+                .antMatchers("/test/test").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin();
     }
 }
